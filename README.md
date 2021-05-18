@@ -1,2 +1,2 @@
-# SenservaForSentenilSetup
+# SenservaForSentinelSetup
 Automated setup script
