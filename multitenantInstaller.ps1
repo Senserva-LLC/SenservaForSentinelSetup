@@ -4,8 +4,8 @@
 #Requires -RunAsAdministrator
 #Requires -Modules Az.Storage,Az.Accounts,Az.Resources
 
-$config_SenservaPrimarySPName = "SenservaMultiTenant"
-$requiredResourceAccess = "{`"requiredResourceAccess`":[{`"resourceAppId`":`"00000003-0000-0000-c000-000000000000`",`"resourceAccess`":[{`"id`":`"7427e0e9-2fba-42fe-b0c0-848c9e6a8182`",`"type`":`"Scope`"},{`"id`":`"0e263e50-5827-48a4-b97c-d940288653c7`",`"type`":`"Scope`"},{`"id`":`"37f7f235-527c-4136-accd-4a02d197296e`",`"type`":`"Scope`"},{`"id`":`"14dad69e-099b-42c9-810b-d002981feec1`",`"type`":`"Scope`"},{`"id`":`"246dd0d5-5bd0-4def-940b-0421030a5b68`",`"type`":`"Role`"},{`"id`":`"bf394140-e372-4bf9-a898-299cfc7564e5`",`"type`":`"Role`"},{`"id`":`"6e472fd1-ad78-48da-a0f0-97ab2c6b769e`",`"type`":`"Role`"},{`"id`":`"dc5007c0-2d7d-4c42-879c-2dab87571379`",`"type`":`"Role`"},{`"id`":`"df021288-bdef-4463-88db-98f22de89214`",`"type`":`"Role`"},{`"id`":`"b0afded3-3588-46d8-8b3d-9842eff778da`",`"type`":`"Role`"},{`"id`":`"230c1aed-a721-4c5d-9cb4-a90514e508ef`",`"type`":`"Role`"},{`"id`":`"40f97065-369a-49f4-947c-6a255697ae91`",`"type`":`"Role`"},{`"id`":`"7ab1d382-f21e-4acd-a863-ba3e13f7da61`",`"type`":`"Role`"},{`"id`":`"4cdc2547-9148-4295-8d11-be0db1391d6b`",`"type`":`"Role`"},{`"id`":`"5df6fe86-1be0-44eb-b916-7bd443a71236`",`"type`":`"Role`"},{`"id`":`"38d9df27-64da-44fd-b7c5-a6fbac20248f`",`"type`":`"Role`"}]}]}" | ConvertFrom-Json
+$config_SenservaPrimarySPName = "SenservaMultiTenantOct2021_2"
+$requiredResourceAccess = "{`"requiredResourceAccess`":[{`"resourceAppId`":`"00000003-0000-0000-c000-000000000000`",`"resourceAccess`":[{`"id`":`"7427e0e9-2fba-42fe-b0c0-848c9e6a8182`",`"type`":`"Scope`"},{`"id`":`"0e263e50-5827-48a4-b97c-d940288653c7`",`"type`":`"Scope`"},{`"id`":`"37f7f235-527c-4136-accd-4a02d197296e`",`"type`":`"Scope`"},{`"id`":`"14dad69e-099b-42c9-810b-d002981feec1`",`"type`":`"Scope`"},{`"id`":`"246dd0d5-5bd0-4def-940b-0421030a5b68`",`"type`":`"Role`"},{`"id`":`"bf394140-e372-4bf9-a898-299cfc7564e5`",`"type`":`"Role`"},{`"id`":`"6e472fd1-ad78-48da-a0f0-97ab2c6b769e`",`"type`":`"Role`"},{`"id`":`"dc5007c0-2d7d-4c42-879c-2dab87571379`",`"type`":`"Role`"},{`"id`":`"df021288-bdef-4463-88db-98f22de89214`",`"type`":`"Role`"},{`"id`":`"b0afded3-3588-46d8-8b3d-9842eff778da`",`"type`":`"Role`"},{`"id`":`"230c1aed-a721-4c5d-9cb4-a90514e508ef`",`"type`":`"Role`"},{`"id`":`"40f97065-369a-49f4-947c-6a255697ae91`",`"type`":`"Role`"},{`"id`":`"7ab1d382-f21e-4acd-a863-ba3e13f7da61`",`"type`":`"Role`"},{`"id`":`"4cdc2547-9148-4295-8d11-be0db1391d6b`",`"type`":`"Role`"},{`"id`":`"5df6fe86-1be0-44eb-b916-7bd443a71236`",`"type`":`"Role`"},{`"id`":`"38d9df27-64da-44fd-b7c5-a6fbac20248f`",`"type`":`"Role`"},{`"id`":`"2f51be20-0bb4-4fed-bf7b-db946066c75e`",`"type`":`"Role`"},{`"id`":`"dc377aa6-52d8-4e23-b271-2a7ae04cedf3`",`"type`":`"Role`"},{`"id`":`"06a5fe6d-c49d-46a7-b082-56b1b14103c7`",`"type`":`"Role`"},{`"id`":`"c7fbd983-d9aa-4fa7-84b8-17382c103bc4`",`"type`":`"Role`"}]}]}" | ConvertFrom-Json
 
 Write-Host "Welcome to Senserva!" -ForegroundColor Green
 Write-Host "This script will guide you as CSP to set up your main and child tenants" -ForegroundColor Green
@@ -40,7 +40,7 @@ if(!$PrimarySP){
             $rand = New-Object System.Random
             1..96 | ForEach { $pwd = $pwd + [char]$rand.next(33,127) }
             $secPwd = ConvertTo-SecureString -String $pwd -AsPlainText -Force
-            $PrimarySP = New-AzADApplication -DisplayName $config_SenservaPrimarySPName -AvailableToOtherTenants:$True -Password $secPwd -Confirm:$False -ReplyUrls "https://admin.microsoft.com" -IdentifierUris "https://$($userUPN.Split("@")[1])" -WarningAction SilentlyContinue -ErrorAction Stop -InformationAction SilentlyContinue
+            $PrimarySP = New-AzADApplication -DisplayName $config_SenservaPrimarySPName -AvailableToOtherTenants:$True -Password $secPwd -Confirm:$False -ReplyUrls "https://admin.microsoft.com" -IdentifierUris "https://$($userUPN.Split("@")[1])/Oct2021_2" -WarningAction SilentlyContinue -ErrorAction Stop -InformationAction SilentlyContinue
             Write-Host "Created app registration for the Parent Tenant" -ForegroundColor Green
             Write-Host "Please save the following information in Keyvault:" -ForegroundColor Green
             Write-Host "Primary tenant client id: $($PrimarySP.ApplicationId.Guid)" -ForegroundColor Green
@@ -97,12 +97,13 @@ Try{
     Throw $_
 }
 
-$response = Read-Host "A browser will now open and ask you to consent, press any key to open your browser and come back here when you have consented."
+$response = Read-Host "A browser will now open and ask you to consent, press the Enter key to open your browser and come back here when you have consented."
 Start-Process "https://login.microsoftonline.com/$tenantId/adminconsent?client_id=$($PrimarySP.ApplicationId)" -Wait
 
 $response = Read-Host "Do you wish to install any Child Tenants? Y/N"
 if($response -ne "Y" -and $response -ne "Yes"){
-    Throw "Script completed"
+    Write-Host "App deployment process has completed" -ForegroundColor Green
+    Exit
 }
 
 Write-Host "Checking registered CSP child tenants..." -ForegroundColor Green
@@ -121,7 +122,8 @@ $childTenants = $childTenants.value
 
 $response = Read-Host "Detected $($childTenants.Count) customers under your CSP tenant, do you wish to continue? Y/N"
 if($response -ne "Y" -and $response -ne "Yes"){
-    Throw "Script completed"
+    Write-Host "App deployment process has completed" -ForegroundColor Green
+    Exit
 }
 
 foreach($tenant in $childTenants){
