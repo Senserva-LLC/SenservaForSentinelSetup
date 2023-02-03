@@ -14,11 +14,6 @@ $requiredResourceAccess = @(
 				Id = "7427e0e9-2fba-42fe-b0c0-848c9e6a8182";
 				Type = "Scope"
       		},
-			@{
-				# Directory.AccessAsUser.All
-				Id = "0e263e50-5827-48a4-b97c-d940288653c7";
-				Type = "Scope"
-      		},
       		@{
 				# openid
 				Id = "37f7f235-527c-4136-accd-4a02d197296e";
