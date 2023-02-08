@@ -1,156 +1,150 @@
-#Senserva Multi-Tenant installation / configuration script
+#Senserva Full Installation / Configuration Script
 #Copyright: Senserva LLC
 #Author: Senserva
 #Requires -RunAsAdministrator
 #Requires -Modules Az.Storage,Az.Accounts,Az.Resources
 
-$config_SenservaPrimarySPName = "SenservaMultiTenant"
-$requiredResourceAccess = @(
-	@{
-		ResourceAppId = "00000003-0000-0000-c000-000000000000";
-  		ResourceAccess = @(
-			@{
-          			Id = "7427e0e9-2fba-42fe-b0c0-848c9e6a8182";
-          			Type = "Scope"
-      		},
-			@{
-          			Id = "0e263e50-5827-48a4-b97c-d940288653c7";
-          			Type = "Scope"
-      		},
-      		@{
-      	    		Id = "37f7f235-527c-4136-accd-4a02d197296e";
-          			Type = "Scope"
-	      	},
-      		@{
-          			Id = "14dad69e-099b-42c9-810b-d002981feec1";
-          			Type = "Scope"
-	      	},
-      		@{
-          			Id = "246dd0d5-5bd0-4def-940b-0421030a5b68";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "bf394140-e372-4bf9-a898-299cfc7564e5";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "6e472fd1-ad78-48da-a0f0-97ab2c6b769e";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "dc5007c0-2d7d-4c42-879c-2dab87571379";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "df021288-bdef-4463-88db-98f22de89214";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "b0afded3-3588-46d8-8b3d-9842eff778da";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "230c1aed-a721-4c5d-9cb4-a90514e508ef";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "40f97065-369a-49f4-947c-6a255697ae91";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "7ab1d382-f21e-4acd-a863-ba3e13f7da61";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "4cdc2547-9148-4295-8d11-be0db1391d6b";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "5df6fe86-1be0-44eb-b916-7bd443a71236";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "38d9df27-64da-44fd-b7c5-a6fbac20248f";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "2f51be20-0bb4-4fed-bf7b-db946066c75e";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "dc377aa6-52d8-4e23-b271-2a7ae04cedf3";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "06a5fe6d-c49d-46a7-b082-56b1b14103c7";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "c7fbd983-d9aa-4fa7-84b8-17382c103bc4";
-          			Type = "Role"
-	      	},
-      		@{
-          			Id = "c7fbd983-d9aa-4fa7-84b8-17382c103bc4";
-          			Type = "Role"
-	      	}
-  		)
-	},
-	@{
-		ResourceAppId = "05a65629-4c1b-48c1-a78b-804c4abdd4af";
-  		ResourceAccess = @(
-			@{
-          			Id = "e9aa7b67-ea0d-435b-ab36-592cd9b23d61";
-          			Type = "Role"
-      		},
-			@{
-          			Id = "83bc8d83-2679-44ef-b813-d5f556fc4474";
-          			Type = "Role"
-      		},
-			@{
-          			Id = "8e41f311-31d5-43aa-bb79-8fd4e14a8745";
-          			Type = "Role"
-      		}
-  		)
-	},
-	@{
-		ResourceAppId = "c5393580-f805-4401-95e8-94b7a6ef2fc2";
-  		ResourceAccess = @(
-			@{
-          			Id = "4807a72c-ad38-4250-94c9-4eabfe26cd55";
-          			Type = "Role"
-      		},
-			@{
-          			Id = "594c1fb6-4f81-4475-ae41-0c394909246c";
-          			Type = "Role"
-      		},
-			@{
-          			Id = "e2cea78f-e743-4d8f-a16a-75b629a038ae";
-          			Type = "Role"
-      		}
-  		)
-	},
-	@{
-		ResourceAppId = "8ee8fdad-f234-4243-8f3b-15c294843740";
-  		ResourceAccess = @(
-			@{
-          			Id = "a7deff90-e2f5-4e4e-83a3-2c74e7002e28";
-          			Type = "Role"
-      		},
-			@{
-          			Id = "a9790345-4595-42e4-971a-ccdc79f19b7c";
-          			Type = "Role"
-      		},
-			@{
-          			Id = "7734e8e5-8dde-42fc-b5ae-6eafea078693";
-          			Type = "Role"
-      		},
-			@{
-          			Id = "8d90f441-09cf-4fdc-ab45-e874fa3a28e8";
-          			Type = "Role"
-      		}
-  		)
-	}
-)
+$config_SenservaPrimarySPName = "SenservaFull"
+$requiredResourceAccess = "{
+    `"requiredResourceAccess`": [
+      {
+        `"resourceAppId`": `"00000003-0000-0000-c000-000000000000`",
+        `"resourceAccess`": [
+          {
+            `"id`": `"7427e0e9-2fba-42fe-b0c0-848c9e6a8182`",
+            `"type`": `"Scope`"
+          },
+          {
+            `"id`": `"37f7f235-527c-4136-accd-4a02d197296e`",
+            `"type`": `"Scope`"
+          },
+          {
+            `"id`": `"14dad69e-099b-42c9-810b-d002981feec1`",
+            `"type`": `"Scope`"
+          },
+          {
+            `"id`": `"246dd0d5-5bd0-4def-940b-0421030a5b68`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"bf394140-e372-4bf9-a898-299cfc7564e5`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"6e472fd1-ad78-48da-a0f0-97ab2c6b769e`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"dc5007c0-2d7d-4c42-879c-2dab87571379`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"df021288-bdef-4463-88db-98f22de89214`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"b0afded3-3588-46d8-8b3d-9842eff778da`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"230c1aed-a721-4c5d-9cb4-a90514e508ef`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"40f97065-369a-49f4-947c-6a255697ae91`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"7ab1d382-f21e-4acd-a863-ba3e13f7da61`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"4cdc2547-9148-4295-8d11-be0db1391d6b`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"5df6fe86-1be0-44eb-b916-7bd443a71236`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"38d9df27-64da-44fd-b7c5-a6fbac20248f`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"2f51be20-0bb4-4fed-bf7b-db946066c75e`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"dc377aa6-52d8-4e23-b271-2a7ae04cedf3`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"06a5fe6d-c49d-46a7-b082-56b1b14103c7`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"c7fbd983-d9aa-4fa7-84b8-17382c103bc4`",
+            `"type`": `"Role`"
+          }
+        ]
+      },
+      {
+        `"resourceAppId`": `"05a65629-4c1b-48c1-a78b-804c4abdd4af`",
+        `"resourceAccess`": [
+          {
+            `"id`": `"e9aa7b67-ea0d-435b-ab36-592cd9b23d61`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"83bc8d83-2679-44ef-b813-d5f556fc4474`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"8e41f311-31d5-43aa-bb79-8fd4e14a8745`",
+            `"type`": `"Role`"
+          }
+        ]
+      },
+      {
+        `"resourceAppId`": `"c5393580-f805-4401-95e8-94b7a6ef2fc2`",
+        `"resourceAccess`": [
+          {
+            `"id`": `"4807a72c-ad38-4250-94c9-4eabfe26cd55`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"594c1fb6-4f81-4475-ae41-0c394909246c`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"e2cea78f-e743-4d8f-a16a-75b629a038ae`",
+            `"type`": `"Role`"
+          }
+        ]
+      },
+      {
+        `"resourceAppId`": `"8ee8fdad-f234-4243-8f3b-15c294843740`",
+        `"resourceAccess`": [
+          {
+            `"id`": `"a7deff90-e2f5-4e4e-83a3-2c74e7002e28`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"a9790345-4595-42e4-971a-ccdc79f19b7c`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"7734e8e5-8dde-42fc-b5ae-6eafea078693`",
+            `"type`": `"Role`"
+          },
+          {
+            `"id`": `"8d90f441-09cf-4fdc-ab45-e874fa3a28e8`",
+            `"type`": `"Role`"
+          }
+        ]
+      }
+    ]
+  }" | ConvertFrom-Json
 
 Write-Host "Welcome to Senserva!" -ForegroundColor Green
 Write-Host "This script will guide you as CSP to set up your main and child tenants" -ForegroundColor Green
@@ -181,9 +175,9 @@ if(!$PrimarySP){
         Throw "Cannot continue without a primary tenant"
     }else{
         try{
-            $PrimarySP = New-AzADApplication -DisplayName $config_SenservaPrimarySPName -AvailableToOtherTenants:$True -Confirm:$False -ReplyUrls "https://admin.microsoft.com" -IdentifierUris "https://$($userUPN.Split("@")[1])" -RequiredResourceAccess $requiredResourceAccess -WarningAction SilentlyContinue -ErrorAction Stop -InformationAction SilentlyContinue
-		$secPwd = Get-AzADApplication -ApplicationId $PrimarySP.AppId | New-AzADAppCredential
-		Write-Host "Created app registration for the Parent Tenant" -ForegroundColor Green
+            $PrimarySP = New-AzADApplication -DisplayName $config_SenservaPrimarySPName -AvailableToOtherTenants:$True -Confirm:$False -ReplyUrls "https://admin.microsoft.com" -IdentifierUris "https://$($userUPN.Split("@")[1])" -WarningAction SilentlyContinue -ErrorAction Stop -InformationAction SilentlyContinue
+            $secPwd = Get-AzADApplication -ApplicationId $PrimarySP.AppId | New-AzADAppCredential
+            Write-Host "Created app registration for the Parent Tenant" -ForegroundColor Green
             Write-Host "Please save the following information in Keyvault:" -ForegroundColor Green
             Write-Host "Primary tenant client id: $($PrimarySP.AppId)" -ForegroundColor Green
             Write-Host "Primary tenant client password: $($secPwd.secretText)" -ForegroundColor Green
